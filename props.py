@@ -36,7 +36,7 @@ class Props(object):
             line = self._lines[i]
             if self._trim_spaces:
                 line = line.strip().strip('\t').strip()
-            if line != '' and not line.startswith(self._comment_char):
+            if line != '' and not line.startswith(self._comment_char) and self._key_value_sep in line:
                 key, value = line.split(self._key_value_sep, 1)
                 key = key.strip().strip('\t').strip()
                 value = value.strip().strip('\t').strip()
@@ -82,6 +82,16 @@ class Props(object):
     def to_screen(self):
         print(self.to_text())
 
+def render(props_dict, **params):
+    res = OrderedDict()
+
+    for k, v in props_dict.items():
+        k = k.format(**params)
+        res[k] = OrderedDict()
+        for k1, v1 in v.items():
+            res[k][k1.format(**params)] = v1.format(**params)
+
+    return res
 
 def merge_files(path_props_default, path_props_custom):
     props_default = Props().load_file(path_props_default)
@@ -89,7 +99,7 @@ def merge_files(path_props_default, path_props_custom):
 
     props_default.update(props_custom.to_dict())
 
-    props_default.to_text(path_result)
+    props_default.to_text()
 
 
 def merge_texts(text_props_default, text_props_custom):
@@ -98,4 +108,4 @@ def merge_texts(text_props_default, text_props_custom):
 
     props_default.update(props_custom.to_dict())
 
-    props_default.to_text(path_result)
+    props_default.to_text()
