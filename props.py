@@ -83,19 +83,19 @@ class Props(object):
         print(self.to_text())
 
 
-def merge_files_to_file(path_props_default, path_props_custom, path_result):
+def merge_files(path_props_default, path_props_custom):
     props_default = Props().load_file(path_props_default)
     props_custom = Props().load_file(path_props_custom)
 
     props_default.update(props_custom.to_dict())
 
-    props_default.to_file(path_result)
+    props_default.to_text(path_result)
 
 
-def merge_texts_to_file(text_props_default, text_props_custom, path_result):
+def merge_texts(text_props_default, text_props_custom):
     props_default = Props().load_text(text_props_default)
     props_custom = Props().load_text(text_props_custom)
 
     props_default.update(props_custom.to_dict())
 
-    props_default.to_file(path_result)
+    props_default.to_text(path_result)
