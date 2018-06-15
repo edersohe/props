@@ -35,21 +35,21 @@ class Props(object):
         for i in range(len(self._lines)):
             line = self._lines[i]
             if self._trim_spaces:
-                line = line.strip().strip('\t')
+                line = line.strip().strip('\t').strip()
             if line != '' and not line.startswith(self._comment_char):
                 key, value = line.split(self._key_value_sep, 1)
-                key = key.strip().strip('\t')
-                value = value.strip().strip('\t')
+                key = key.strip().strip('\t').strip()
+                value = value.strip().strip('\t').strip()
                 self._dict[key] = value
                 self._index[key] = i
 
     def get(self, key):
-        key = key.strip().strip('\t')
+        key = key.strip().strip('\t').strip()
         return self._dict[key]
 
     def set(self, key, value):
-        key = key.strip().strip('\t')
-        value = value.strip().strip('\t')
+        key = key.strip().strip('\t').strip()
+        value = value.strip().strip('\t').strip()
         if key in self._dict:
             old_value = self._dict[key]
             index = self._index[key]
@@ -64,8 +64,8 @@ class Props(object):
 
     def update(self, update_dict):
         for key, value in update_dict.items():
-            key = key.strip().strip('\t')
-            value = value.strip().strip('\t')
+            key = key.strip().strip('\t').strip()
+            value = value.strip().strip('\t').strip()
             self.set(key, value)
 
     def to_dict(self):
